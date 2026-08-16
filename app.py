@@ -1,5 +1,5 @@
 import streamlit as st
-from google import genai
+import google.generativeai as genai
 
 # Cấu hình giao diện trang web
 st.set_page_config(
@@ -22,9 +22,19 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
     else:
         try:
             with st.spinner("AI đang đọc bài và chấm điểm..."):
-                # Khởi tạo client với API Key từ Streamlit Secrets
+                # Lấy API Key từ Streamlit Secrets
                 api_key = st.secrets["GEMINI_API_KEY"]
-                client = genai.Client(api_key=api_key)
+                genai.configure(api_key=api_key)
+                
+                # Cấu hình mô hình tiêu chuẩn ổn định nhất
+                generation_config = {
+                    "temperature": 0.7,
+                }
+                
+                model = genai.GenerativeModel(
+                    model_name="gemini-1.5-flash",
+                    generation_config=generation_config
+                )
                 
                 prompt = (
                     f"Hãy đóng vai một giáo viên Ngữ văn tận tâm, chấm bài theo thang điểm 10. "
@@ -33,17 +43,15 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
                     "Hãy cho biết điểm số và đưa ra nhận xét chi tiết, chỉ ra ưu điểm và khuyết điểm."
                 )
                 
-                # Gọi mô hình chuẩn mới nhất của Google GenAI SDK
-                response = client.models.generate_content(
-                    model='gemini-2.5-flash',
-                    contents=prompt,
-                )
+                response = model.generate_content(prompt)
                 
                 st.success("Đã chấm bài thành công!")
                 st.subheader("Kết quả từ Giáo viên AI:")
                 st.markdown(response.text)
                 
         except Exception as e:
-            st.error(f"Đã xảy ra lỗi kết nối: {e}")
-            st.info("Hãy kiểm tra lại xem bạn đã nhập đúng 'GEMINI_API_KEY' trong phần Secrets của Streamlit Cloud chưa nhé.")
-                
+            st.error(f"Chi tiết lỗi hệ thống: {e}")
+            st.info("💡 Mẹo khắc phục: Bạn hãy kiểm tra lại mục 'Secrets' trong cài đặt Streamlit Cloud xem đã điền chính xác key `GEMINI_API_KEY` chưa nhé.")
+
+      
+        
