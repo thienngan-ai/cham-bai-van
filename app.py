@@ -1,5 +1,5 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai
 
 # Cấu hình giao diện trang web
 st.set_page_config(
@@ -22,12 +22,9 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
     else:
         try:
             with st.spinner("AI đang đọc bài và chấm điểm..."):
-                # Gọi API Key từ Streamlit Secrets
+                # Khởi tạo client với API Key từ Streamlit Secrets
                 api_key = st.secrets["GEMINI_API_KEY"]
-                genai.configure(api_key=api_key)
-                
-                # Sử dụng model chuẩn đời mới
-                model = genai.GenerativeModel("gemini-2.5-flash")
+                client = genai.Client(api_key=api_key)
                 
                 prompt = (
                     f"Hãy đóng vai một giáo viên Ngữ văn tận tâm, chấm bài theo thang điểm 10. "
@@ -36,7 +33,11 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
                     "Hãy cho biết điểm số và đưa ra nhận xét chi tiết, chỉ ra ưu điểm và khuyết điểm."
                 )
                 
-                response = model.generate_content(prompt)
+                # Gọi mô hình chuẩn mới nhất của Google GenAI SDK
+                response = client.models.generate_content(
+                    model='gemini-2.5-flash',
+                    contents=prompt,
+                )
                 
                 st.success("Đã chấm bài thành công!")
                 st.subheader("Kết quả từ Giáo viên AI:")
@@ -45,5 +46,4 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
         except Exception as e:
             st.error(f"Đã xảy ra lỗi kết nối: {e}")
             st.info("Hãy kiểm tra lại xem bạn đã nhập đúng 'GEMINI_API_KEY' trong phần Secrets của Streamlit Cloud chưa nhé.")
-
                 
