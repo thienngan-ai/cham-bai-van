@@ -3,7 +3,7 @@ import urllib.request
 import streamlit as st
 
 st.set_page_config(
-    page_title="AI Chấm Bài Ngữ Văn - 11A6", page_icon="📝", layout="centered"
+    page_title="AI Chấm Bài Ngữ Văn", page_icon="📝", layout="centered"
 )
 
 st.title("📝 HỆ THỐNG AI CHẤM BÀI NGỮ VĂN")
@@ -55,6 +55,6 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
 
       except Exception as e:
         st.error(
-            "Không thể kết nối với AI. Hãy đảm bảo ứng dụng **Ollama** đang được"
+            "Không thể kết nối với AI. Hãy đảm bảo ứng dụng **Gemini API** đang được"
             " mở trên máy tính của bạn!"
         )
