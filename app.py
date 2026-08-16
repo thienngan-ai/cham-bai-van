@@ -27,7 +27,7 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
                 genai.configure(api_key=api_key)
                 
                 # Sử dụng model gemini-1.5-flash
-                model = genai.GenerativeModel("gemini-pro")
+                model = genai.GenerativeModel("models/gemini-1.5-flash")
                 
                 prompt = (
                     f"Hãy đóng vai một giáo viên Ngữ văn tận tâm, chấm bài theo thang điểm 10. "
