@@ -1,7 +1,7 @@
 import streamlit as st
 import google.generativeai as genai
 
-# Cấu hình trang
+# Cấu hình giao diện trang web
 st.set_page_config(
     page_title="Hệ Thống AI Chấm Bài Ngữ Văn", 
     page_icon="📝", 
@@ -26,8 +26,8 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
                 api_key = st.secrets["GEMINI_API_KEY"]
                 genai.configure(api_key=api_key)
                 
-                # Sử dụng cách gọi trực tiếp chuẩn mực
-                model = genai.GenerativeModel('gemini-1.5-flash-latest')
+                # Sử dụng model chuẩn đời mới
+                model = genai.GenerativeModel("gemini-2.5-flash")
                 
                 prompt = (
                     f"Hãy đóng vai một giáo viên Ngữ văn tận tâm, chấm bài theo thang điểm 10. "
@@ -43,5 +43,7 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
                 st.markdown(response.text)
                 
         except Exception as e:
-            st.error(f"Đã xảy ra lỗi: {e}")
+            st.error(f"Đã xảy ra lỗi kết nối: {e}")
             st.info("Hãy kiểm tra lại xem bạn đã nhập đúng 'GEMINI_API_KEY' trong phần Secrets của Streamlit Cloud chưa nhé.")
+
+                
