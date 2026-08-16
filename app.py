@@ -45,3 +45,5 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
         except Exception as e:
             st.error(f"Chi tiết lỗi hệ thống: {e}")
             st.info("💡 Mẹo khắc phục: Bạn hãy kiểm tra lại mục 'Secrets' trong cài đặt Streamlit Cloud xem đã điền chính xác key `GEMINI_API_KEY` chưa nhé.")
+
+
