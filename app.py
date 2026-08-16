@@ -8,7 +8,7 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("📝 HỆ THỐNG AI CHẤM BÀI NGỮ VĂN")
+st.title("📝 HỆ THỐNG AI CHẤM BÀI NGỮ Văn")
 st.write("Hệ thống trợ giảng AI hỗ trợ học sinh tự chấm và nhận xét bài làm văn trực tuyến.")
 
 # Khung nhập liệu
@@ -26,15 +26,8 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
                 api_key = st.secrets["GEMINI_API_KEY"]
                 genai.configure(api_key=api_key)
                 
-                # Cấu hình mô hình tiêu chuẩn ổn định nhất
-                generation_config = {
-                    "temperature": 0.7,
-                }
-                
-                model = genai.GenerativeModel(
-                    model_name="gemini-1.5-flash",
-                    generation_config=generation_config
-                )
+                # Gọi trực tiếp qua GenerativeModel với tên chuẩn không bị lỗi tiền tố
+                model = genai.GenerativeModel("gemini-pro")
                 
                 prompt = (
                     f"Hãy đóng vai một giáo viên Ngữ văn tận tâm, chấm bài theo thang điểm 10. "
@@ -52,6 +45,3 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
         except Exception as e:
             st.error(f"Chi tiết lỗi hệ thống: {e}")
             st.info("💡 Mẹo khắc phục: Bạn hãy kiểm tra lại mục 'Secrets' trong cài đặt Streamlit Cloud xem đã điền chính xác key `GEMINI_API_KEY` chưa nhé.")
-
-      
-        
