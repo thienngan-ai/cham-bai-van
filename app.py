@@ -26,8 +26,8 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
                 api_key = st.secrets["GEMINI_API_KEY"]
                 genai.configure(api_key=api_key)
                 
-                # Sử dụng model gemini-1.5-flash
-                model = genai.GenerativeModel("models/gemini-1.5-flash")
+                # Sử dụng cách gọi trực tiếp chuẩn mực
+                model = genai.GenerativeModel('gemini-1.5-flash-latest')
                 
                 prompt = (
                     f"Hãy đóng vai một giáo viên Ngữ văn tận tâm, chấm bài theo thang điểm 10. "
@@ -45,4 +45,3 @@ if st.button("🚀 Bắt đầu chấm bài", type="primary"):
         except Exception as e:
             st.error(f"Đã xảy ra lỗi: {e}")
             st.info("Hãy kiểm tra lại xem bạn đã nhập đúng 'GEMINI_API_KEY' trong phần Secrets của Streamlit Cloud chưa nhé.")
-
